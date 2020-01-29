@@ -33,6 +33,7 @@ func main(){
 				if j > n{
 					break
 				}else {
+					
 					if j != (s * (i + 1))-1{
 						tmp = strconv.Itoa(j+1)
 						page_list_str[i] += tmp + " "

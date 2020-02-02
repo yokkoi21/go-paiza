@@ -22,6 +22,7 @@ func main(){
 	split_input = strings.Split(input[0]," ")
 	n,_ = strconv.Atoi(split_input[0])
 	v,_ = strconv.Atoi(split_input[1])
+	
 	ans = "NO"
 	for i = 1;i < n+1;i++{
 		split_input = strings.Split(input[i]," ")

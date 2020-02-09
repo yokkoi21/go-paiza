@@ -1,99 +1,69 @@
 package main
 import "fmt"
-import "strings"
+//import "strings"
 import "os"
 import "strconv"
 import "bufio"
+import "sort"
 
 func main(){
 	var sc = bufio.NewScanner(os.Stdin)
-	var input [11]string
-	var split_input []string
-	var n int
+	var input [20]string
+	var s,n int
 	var i,j int
-	var sum,sum_max int
-	var ans string
 	var count int
-	var count_check int
+	var product []int
+	var pattern []int
+	var tmp int
+	var tmp_value int
+	
 
 	i = 0
 	for sc.Scan(){
 		input[i] = sc.Text()
 		i++
 	}
+	s,_ = strconv.Atoi(input[0])
+	n,_ = strconv.Atoi(input[1])
 	
-	n,_ = strconv.Atoi(input[0])
-	
-
-
-	graph := make([][]int, n)
-	for i:=0; i<n; i++{
-		graph[i] = make([]int, n)
-	}
 	 
 	
-	for i = 1;i < n+1;i++{
-		split_input = strings.Split(input[i]," ")
-		for j = 0;j < n;j++{
-			graph[i-1][j],_ = strconv.Atoi(split_input[j])
-			sum += graph[i-1][j]
-		}
-		if sum > sum_max{
-			sum_max = sum
-		}
-		sum = 0
+	for i = 0;i < n;i++{
+		tmp,_ = strconv.Atoi(input[i+2])
+		product = append(product, tmp)
 	}
 	
-	for i = 0;i < n;i++{
-		for j = 0;j < n;j++{
-			sum += graph[i][j]
-		}
-		if sum < sum_max{
-			for j = 0;j < n;j++{
-				if graph[i][j] == 0{
-					count += 1
-					if sum_max - sum > n*n{
-					}else{
-						graph[i][j] = sum_max - sum
-					}
-				}
-			}	
-		}
-		if count == 2{
-			count_check = 1	
-		}
-		count = 0
-		sum = 0
-	}
-	//fmt.Println(count_check)
-	if count_check == 1{
-		for  j = 0;j < n;j++{
-			for i = 0;i < n;i++{
-				sum += graph[i][j]
-				//fmt.Println(sum)
-			}
-			if sum < sum_max{
-				for i = 0;i < n;i++{
-					if graph[i][j] == 0{
-						graph[i][j] = sum_max - sum
-					}
-				}	
-			}
-			sum = 0			
-		}
-	}
+	sort.Sort(sort.IntSlice(product))
+	//fmt.Println(product)
 
-	for i = 0;i < n;i++{
-		for j = 0;j < n;j++{
-			if j != n-1{
-				ans = ans + strconv.Itoa(graph[i][j]) + " "
-			}else {
-				ans = ans + strconv.Itoa(graph[i][j])
+	for i = n-1;i >= 0;i--{
+		tmp_value = 0
+		tmp_value += product[i]
+		if tmp_value >= s{
+			count += 1
+			pattern = append(pattern, tmp_value)
+			continue
+		}else{
+			for j = i-1;j >= 0;j--{
+				tmp_value += product[j]
+				if tmp_value >= s{
+					count += 1
+					pattern = append(pattern, tmp_value)
+					tmp_value -= product[j]
+				}
 			}
+			
+			// for j = 0;j < i;j++{
+			// 	tmp_value -= product[j]
+			// 	if tmp_value < s{
+			// 		count -= 1
+			// 		break
+			// 	}
+			// }
 		}
-		fmt.Println(ans)
-		ans = ""
 	}
 	
+	fmt.Println(count)
+	//fmt.Println(pattern)
 
 }

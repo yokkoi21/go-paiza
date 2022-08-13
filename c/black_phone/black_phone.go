@@ -16,7 +16,7 @@ func main() {
 	var distance [10]int = [10]int{12, 3, 4, 5, 6, 7, 8, 9, 10, 11}
 	var tmp int
 	var cnt int
-
+,m
 	sc.Scan()
 	input[0] = sc.Text()
 	split_input = strings.Split(input[0], "")
